@@ -104,6 +104,7 @@ const Login = ({ setIsAuthenticated }) => {
           placeholder="admin@example.com"
           value={email}
           onChange={e => setEmail(e.target.value)}
+          required
         />
         <label htmlFor="password">Password</label>
         <input
@@ -113,6 +114,7 @@ const Login = ({ setIsAuthenticated }) => {
           placeholder="password"
           value={password}
           onChange={e => setPassword(e.target.value)}
+          required
         />
         <input style={{ marginTop: '12px' }} type="submit" value="Login" name="Login" />
       </form>
