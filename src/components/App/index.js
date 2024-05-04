@@ -4,15 +4,17 @@ import Login from '../Login';
 import Dashboard from '../Dashboard';
 
 const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    JSON.parse(localStorage.getItem('is_authenticated')) || false
+  );
 
   useEffect(() => {
-    setIsAuthenticated(JSON.parse(localStorage.getItem('is_authenticated')));
-  }, []);
+    localStorage.setItem('is_authenticated', isAuthenticated);
+  }, [isAuthenticated]);
 
   return (
     <>
-      {isAuthenticated ? (
+      {isAuthenticated? (
         <Dashboard setIsAuthenticated={setIsAuthenticated} />
       ) : (
         <Login setIsAuthenticated={setIsAuthenticated} />
