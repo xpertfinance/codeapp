@@ -1,35 +1,70 @@
-import React, { useState, useEffect } from "react";
-
+import React, { useState, useEffect, useMemo } from "react";
 import Header from "./Header";
-import Table from "./Table";
-
+import {
+  MaterialReactTable,
+  useMaterialReactTable,
+} from 'material-react-table';
 import { collection, getDocs} from "firebase/firestore";
 import { db } from "../../config/firestore";
 
 const Dashboard = ({ setIsAuthenticated }) => {
-  const [employees, setEmployees] = useState();
+  const [employees, setEmployees] = useState([]);
   const getEmployees = async () => {
     const querySnapshot = await getDocs(collection(db, "employees"));
-    const employees = querySnapshot.docs.map((doc) => ({
+    const employeesData = querySnapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     }));
-    setEmployees(employees);
+    setEmployees(employeesData);
   };
 
   useEffect(() => {
     getEmployees();
   }, []);
 
+  const columns = useMemo(
+    () => [
+      {
+        accessorKey: 'firstName', 
+        header: 'First Name',
+        size: 150,
+      },
+      {
+        accessorKey: 'lastName',
+        header: 'Last Name',
+        size: 150,
+      },
+      {
+        accessorKey: 'email',
+        header: 'Email',
+        size: 200,
+      },
+      {
+        accessorKey: 'department',
+        header: 'Department',
+        size: 150,
+      },
+      {
+        accessorKey: 'jobTitle',
+        header: 'Job Title',
+        size: 150,
+      },
+    ],
+    [],
+  );
+
+  const table = useMaterialReactTable({
+    columns,
+    data: employees,
+  });
+
   return (
-    <div className="container">
+   
       <>
         <Header setIsAuthenticated={setIsAuthenticated} />
-        <Table
-          employees={employees}
-        />
+        <MaterialReactTable table={table} />
       </>
-    </div>
+   
   );
 };
 
