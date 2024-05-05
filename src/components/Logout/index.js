@@ -2,6 +2,7 @@ import React from 'react';
 import Swal from 'sweetalert2';
 
 import { getAuth, signOut } from "firebase/auth";
+import { Button } from '@mui/material';
 
 const Logout = ({ setIsAuthenticated }) => {
   const handleLogout = () => {
@@ -33,13 +34,14 @@ const Logout = ({ setIsAuthenticated }) => {
   };
 
   return (
-    <button
-      style={{ marginLeft: '12px' }}
-      className="muted-button"
+    <Button
+      
+    color="inherit"
       onClick={handleLogout}
     >
       Logout
-    </button>
+    </Button>
+
   );
 };
 
