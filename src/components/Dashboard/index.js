@@ -62,6 +62,7 @@ const Dashboard = ({ setIsAuthenticated }) => {
    
       <>
         <Header setIsAuthenticated={setIsAuthenticated} />
+        <h1>Welcome to the Employee Dashboard!</h1>
         <MaterialReactTable table={table} />
       </>
    
