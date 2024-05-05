@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-
 import Login from '../Login';
 import Dashboard from '../Dashboard';
+import { Container } from '@mui/material';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -13,13 +13,13 @@ const App = () => {
   }, [isAuthenticated]);
 
   return (
-    <>
-      {isAuthenticated? (
+    <Container maxWidth="lg">
+      {isAuthenticated ? (
         <Dashboard setIsAuthenticated={setIsAuthenticated} />
       ) : (
         <Login setIsAuthenticated={setIsAuthenticated} />
       )}
-    </>
+    </Container>
   );
 };
 
