@@ -12,67 +12,87 @@ const Login = ({ setIsAuthenticated }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // Function to handle login form submission
   const handleLogin = async (e) => {
     e.preventDefault();
     const auth = getAuth();
     try {
-      // Sign in with email and password
-      await signInWithEmailAndPassword(auth, email, password);
+        // Sign in with email and password
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
-      // Display success message using Swal
-      Swal.fire({
-        icon: "success",
-        title: "Successfully logged in!",
-        showConfirmButton: true,
-        confirmButtonText: "OK",
-      }).then((result) => {
-        if (result.value) {
-          setIsAuthenticated(true);
+        // Check if userCredential exists
+        if (userCredential && userCredential.user) {
+            // Display success message using Swal
+            Swal.fire({
+                icon: "success",
+                title: "Successfully logged in!",
+                showConfirmButton: true,
+                confirmButtonText: "OK",
+            });
+            // Set isAuthenticated to true
+            setIsAuthenticated(true);
+        } else {
+            // Display error message using Swal if userCredential doesn't exist
+            Swal.fire({
+                icon: "error",
+                title: "Error!",
+                text: "Login failed. Please try again.",
+                showConfirmButton: true,
+                confirmButtonText: "OK",
+            });
         }
-      });
     } catch (error) {
-      // Display error message using Swal if login fails
-      Swal.fire({
-        icon: "error",
-        title: "Error!",
-        text: "Incorrect email or password.",
-        showConfirmButton: true,
-        confirmButtonText: "OK",
-      });
+        // Display error message using Swal if login fails
+        Swal.fire({
+            icon: "error",
+            title: "Error!",
+            text: "Incorrect email or password.",
+            showConfirmButton: true,
+            confirmButtonText: "OK",
+        });
     }
-  };
+};
 
   // Function to handle Google sign-in
   const SignUpUsingGoogle = async () => {
     const auth = getAuth();
     const provider = new GoogleAuthProvider();
     try {
-      // Sign in with Google popup
-      await signInWithPopup(auth, provider);
+        // Sign in with Google popup
+        const userCredential = await signInWithPopup(auth, provider);
 
-      // Display success message using Swal
-      Swal.fire({
-        icon: "success",
-        title: "Successfully logged in!",
-        showConfirmButton: true,
-        confirmButtonText: "OK",
-      }).then((result) => {
-        if (result.value) {
-          setIsAuthenticated(true);
+        // If the promise resolves, it means sign-in was successful
+        if (userCredential && userCredential.user) {
+            // Display success message using Swal
+            Swal.fire({
+                icon: "success",
+                title: "Successfully logged in!",
+                showConfirmButton: true,
+                confirmButtonText: "OK",
+            });
+            // Set isAuthenticated to true
+            setIsAuthenticated(true);
+        } else {
+            // Display error message using Swal if userCredential doesn't exist
+            Swal.fire({
+                icon: "error",
+                title: "Error!",
+                text: "Unable to sign in with Google.",
+                showConfirmButton: true,
+                confirmButtonText: "OK",
+            });
         }
-      });
     } catch (error) {
-      // Display error message using Swal if Google sign-in fails
-      Swal.fire({
-        icon: "error",
-        title: "Error!",
-        text: "Unable to sign in with Google.",
-        showConfirmButton: true,
-        confirmButtonText: "OK",
-      });
+        // Display error message using Swal if Google sign-in fails
+        Swal.fire({
+            icon: "error",
+            title: "Error!",
+            text: "Unable to sign in with Google.",
+            showConfirmButton: true,
+            confirmButtonText: "OK",
+        });
     }
-  };
+};
+
 
   const containerStyle = {
     display: "flex",
