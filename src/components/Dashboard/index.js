@@ -1,35 +1,75 @@
-import React, { useState, useEffect } from "react";
-
+import React, { useState, useEffect, useMemo } from "react";
 import Header from "./Header";
-import Table from "./Table";
-
+import {
+  MaterialReactTable,
+  useMaterialReactTable,
+} from 'material-react-table';
 import { collection, getDocs} from "firebase/firestore";
 import { db } from "../../config/firestore";
 
 const Dashboard = ({ setIsAuthenticated }) => {
-  const [employees, setEmployees] = useState();
+  // State to store employees data
+  const [employees, setEmployees] = useState([]);
+
+  // Function to fetch employees data from Firestore
   const getEmployees = async () => {
     const querySnapshot = await getDocs(collection(db, "employees"));
-    const employees = querySnapshot.docs.map((doc) => ({
+    const employeesData = querySnapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     }));
-    setEmployees(employees);
+    setEmployees(employeesData);
   };
 
+  // Fetch employees data on component mount
   useEffect(() => {
     getEmployees();
   }, []);
 
+  // Define columns memoized to avoid unnecessary re-renders
+  const columns = useMemo(
+    () => [
+      {
+        accessorKey: 'firstName', 
+        header: 'First Name',
+        size: 150,
+      },
+      {
+        accessorKey: 'lastName',
+        header: 'Last Name',
+        size: 150,
+      },
+      {
+        accessorKey: 'email',
+        header: 'Email',
+        size: 200,
+      },
+      {
+        accessorKey: 'department',
+        header: 'Department',
+        size: 150,
+      },
+      {
+        accessorKey: 'jobTitle',
+        header: 'Job Title',
+        size: 150,
+      },
+    ],
+    [],
+  );
+
+  // Initialize MaterialReactTable hook with columns and employees data
+  const table = useMaterialReactTable({
+    columns,
+    data: employees,
+  });
+
   return (
-    <div className="container">
-      <>
-        <Header setIsAuthenticated={setIsAuthenticated} />
-        <Table
-          employees={employees}
-        />
-      </>
-    </div>
+    <>
+      <Header setIsAuthenticated={setIsAuthenticated} />
+      <h1>Welcome to the Employee Dashboard!</h1>
+      <MaterialReactTable table={table} />
+    </>
   );
 };
 

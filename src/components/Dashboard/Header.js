@@ -1,16 +1,34 @@
-import React from 'react';
 
 import Logout from '../Logout';
 
-const Header = ({ setIsAuthenticated }) => {
-  return (
-    <header>
-      <h1>Employee List</h1>
-      <div style={{ marginTop: '30px', marginBottom: '18px' }}>
-        <Logout setIsAuthenticated={setIsAuthenticated} />
-      </div>
-    </header>
-  );
-};
+import * as React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
 
-export default Header;
+export default function Header({setIsAuthenticated}) {
+  return (
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            Employee List
+          </Typography>
+          <Logout  setIsAuthenticated={setIsAuthenticated} />
+        </Toolbar>
+      </AppBar>
+    </Box>
+  );
+}

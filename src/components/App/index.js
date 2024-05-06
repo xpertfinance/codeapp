@@ -1,24 +1,28 @@
 import React, { useState, useEffect } from 'react';
-
 import Login from '../Login';
 import Dashboard from '../Dashboard';
+import { Container } from '@mui/material';
 
 const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(null);
+  // State to manage authentication status
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    JSON.parse(localStorage.getItem('is_authenticated')) || false 
+  );
 
+  // Effect to update localStorage when isAuthenticated changes
   useEffect(() => {
-    setIsAuthenticated(JSON.parse(localStorage.getItem('is_authenticated')));
-  }, []);
+    localStorage.setItem('is_authenticated', isAuthenticated);
+  }, [isAuthenticated]);
 
   return (
-    <>
-      {isAuthenticated ? (
-        <Dashboard setIsAuthenticated={setIsAuthenticated} />
+    <Container maxWidth="lg"> 
+      {isAuthenticated ? ( 
+        <Dashboard setIsAuthenticated={setIsAuthenticated} /> 
       ) : (
         <Login setIsAuthenticated={setIsAuthenticated} />
       )}
-    </>
+    </Container>
   );
 };
 
-export default App;
+export default App; 
