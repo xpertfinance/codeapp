@@ -102,8 +102,8 @@ const Login = ({ setIsAuthenticated }) => {
   const paperStyle = {
     padding: 20,
     width: 280,
-    backgroundColor: '#ffffff', // Match the background color
-    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', // Add a box shadow
+    backgroundColor: '#ffffff', 
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
   };
   
   const avatarStyle = {
