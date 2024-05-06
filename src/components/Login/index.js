@@ -56,39 +56,39 @@ const Login = ({ setIsAuthenticated }) => {
     const provider = new GoogleAuthProvider();
     try {
       await signInWithPopup(auth, provider)
-      Swal.fire({
-        timer: 1500,
-        showConfirmButton: false,
-        willOpen: () => {
-          Swal.showLoading();
-        },
-        willClose: () => {
-          setIsAuthenticated(true);
+      // Swal.fire({
+      //   timer: 1500,
+      //   showConfirmButton: false,
+      //   willOpen: () => {
+      //     Swal.showLoading();
+      //   },
+      //   willClose: () => {
+      //     setIsAuthenticated(true);
 
-          Swal.fire({
-            icon: 'success',
-            title: 'Successfully logged in!',
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        },
-      });
+      //     Swal.fire({
+      //       icon: 'success',
+      //       title: 'Successfully logged in!',
+      //       showConfirmButton: false,
+      //       timer: 1500,
+      //     });
+      //   },
+      // });
     } catch (error) {
-      Swal.fire({
-        timer: 1500,
-        showConfirmButton: false,
-        willOpen: () => {
-          Swal.showLoading();
-        },
-        willClose: () => {
-          Swal.fire({
-            icon: 'error',
-            title: 'Error!',
-            text: 'Unable to sign in with Google.',
-            showConfirmButton: true,
-          });
-        },
-      });
+      // Swal.fire({
+      //   timer: 1500,
+      //   showConfirmButton: false,
+      //   willOpen: () => {
+      //     Swal.showLoading();
+      //   },
+      //   willClose: () => {
+      //     Swal.fire({
+      //       icon: 'error',
+      //       title: 'Error!',
+      //       text: 'Unable to sign in with Google.',
+      //       showConfirmButton: true,
+      //     });
+      //   },
+      // });
     }
   };
 
