@@ -8,7 +8,10 @@ import { collection, getDocs} from "firebase/firestore";
 import { db } from "../../config/firestore";
 
 const Dashboard = ({ setIsAuthenticated }) => {
+  // State to store employees data
   const [employees, setEmployees] = useState([]);
+
+  // Function to fetch employees data from Firestore
   const getEmployees = async () => {
     const querySnapshot = await getDocs(collection(db, "employees"));
     const employeesData = querySnapshot.docs.map((doc) => ({
@@ -18,10 +21,12 @@ const Dashboard = ({ setIsAuthenticated }) => {
     setEmployees(employeesData);
   };
 
+  // Fetch employees data on component mount
   useEffect(() => {
     getEmployees();
   }, []);
 
+  // Define columns memoized to avoid unnecessary re-renders
   const columns = useMemo(
     () => [
       {
@@ -53,19 +58,18 @@ const Dashboard = ({ setIsAuthenticated }) => {
     [],
   );
 
+  // Initialize MaterialReactTable hook with columns and employees data
   const table = useMaterialReactTable({
     columns,
     data: employees,
   });
 
   return (
-   
-      <>
-        <Header setIsAuthenticated={setIsAuthenticated} />
-        <h1>Welcome to the Employee Dashboard!</h1>
-        <MaterialReactTable table={table} />
-      </>
-   
+    <>
+      <Header setIsAuthenticated={setIsAuthenticated} />
+      <h1>Welcome to the Employee Dashboard!</h1>
+      <MaterialReactTable table={table} />
+    </>
   );
 };
 
