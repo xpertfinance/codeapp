@@ -55,42 +55,31 @@ const Login = ({ setIsAuthenticated }) => {
     const auth = getAuth();
     const provider = new GoogleAuthProvider();
     try {
-      await signInWithPopup(auth, provider)
-      // Swal.fire({
-      //   timer: 1500,
-      //   showConfirmButton: false,
-      //   willOpen: () => {
-      //     Swal.showLoading();
-      //   },
-      //   willClose: () => {
-      //     setIsAuthenticated(true);
-
-      //     Swal.fire({
-      //       icon: 'success',
-      //       title: 'Successfully logged in!',
-      //       showConfirmButton: false,
-      //       timer: 1500,
-      //     });
-      //   },
-      // });
+      await signInWithPopup(auth, provider);
+  
+      
+      Swal.fire({
+        icon: 'success',
+        title: 'Successfully logged in!',
+        showConfirmButton: true,
+        confirmButtonText: 'OK'
+      }).then((result) => {
+        if (result.value) {
+          setIsAuthenticated(true);
+        }
+      });
     } catch (error) {
-      // Swal.fire({
-      //   timer: 1500,
-      //   showConfirmButton: false,
-      //   willOpen: () => {
-      //     Swal.showLoading();
-      //   },
-      //   willClose: () => {
-      //     Swal.fire({
-      //       icon: 'error',
-      //       title: 'Error!',
-      //       text: 'Unable to sign in with Google.',
-      //       showConfirmButton: true,
-      //     });
-      //   },
-      // });
+    
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Unable to sign in with Google.',
+        showConfirmButton: true,
+        confirmButtonText: 'OK'
+      });
     }
   };
+  
 
   const containerStyle = {
     display: 'flex',
